@@ -1,0 +1,82 @@
+from pygame import *
+
+import sys
+
+init()
+window = display.set_mode((1280, 720))
+running = True
+clock = time.Clock()
+
+gato_mingau = image.load("gato_mingau.jpg")
+gato_mingau = transform.scale(gato_mingau, (200, 200))
+
+gato_font = font.Font("fonte.ttf", 50)
+
+mixer.music.load("lo-siento-wilson-naufrago.mp3")
+mixer.music.play(-1)
+
+#Definição de variáveis
+pos_x = 300
+background_color = "#34ebeb"
+window.fill(background_color)
+
+while running:
+    clock.tick(60)
+
+    for ev in event.get():
+        if ev.type == QUIT:
+            running = False
+
+        #Ações instantaneas
+        if ev.type == KEYDOWN:
+            key_pressed = ev.key
+            if key_pressed == K_SPACE:
+                background_color = (52, 235, 235)
+
+    #Update
+    dt = clock.get_time()/1000
+    keys = key.get_pressed()
+
+    #Se eu pressionar a tecla D ou A, então
+    if keys[K_d]:
+        pos_x = pos_x + 100 * dt
+    elif keys[K_a]:
+        pos_x = pos_x - 100 * dt
+
+    #Desenhar a partir daqui
+    
+    draw.rect(window, (201, 174, 149), (350, 290, 300, 300))
+    draw.rect(window, (89, 42, 13), (500, 420, 90, 170))
+    draw.rect(window, (5, 171, 242), (380, 420, 90, 90))
+    draw.circle(window, (14, 15, 15), (520, 500), 10)
+    draw.polygon(window, (161, 32, 6), ((350, 290), (500, 180), (650, 290)))
+    
+    draw.circle(window, (255, 243, 81), (200, 130), 60)
+    draw.line(window, (255, 243, 81), (200, 130), (200, 250), 5)
+    draw.line(window, (255, 243, 81), (200, 130), (200, 10), 5)
+    draw.line(window, (255, 243, 81), (200, 130), (320, 130), 5)
+    draw.line(window, (255, 243, 81), (200, 130), (80, 130), 5)
+    draw.line(window, (255, 243, 81), (200, 130), (260, 70), 5)
+    draw.line(window, (255, 243, 81), (200, 130), (260, 190), 5)
+    draw.line(window, (255, 243, 81), (200, 130), (140, 70), 5)
+    draw.line(window, (255, 243, 81), (200, 130), (140, 190), 5)
+
+    draw.rect(window, (71, 38, 7), (800, 390, 90, 200))
+    draw.circle(window, (8, 94, 8), (845, 350), 50)
+
+    draw.circle(window, (250, 250, 250), (pos_x, 350), 50)
+    draw.circle(window, (250, 250, 250), (pos_x + 50, 350), 50)
+    draw.circle(window, (250, 250, 250), (pos_x + 100, 350), 50)
+
+    draw.rect(window, (52, 235, 58), (0, 590, 1280, 130))
+    
+    #Desenhar gato do mingau
+
+    window.blit(gato_mingau, (900, 400))
+
+    #Desenhar texto
+
+    gato_text = gato_font.render("Wilson ama mingau", True, (0, 0, 0))
+    window.blit(gato_text, (1000, 600))
+
+    display.update()
