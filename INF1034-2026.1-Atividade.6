@@ -2,7 +2,6 @@ from pygame import *
 
 # import sys
 
-
 init()
 
 window = display.set_mode((1280, 720))
@@ -36,7 +35,10 @@ while running:
         if ev.type == KEYDOWN:
             key_pressed = ev.key
             if key_pressed == K_SPACE:
-                background_color = (52, 235, 235)
+                estado = estado + 1
+            elif estado%2 == 0:
+                estado = 0
+        
 
     #Update
     dt = clock.get_time()/1000
@@ -45,22 +47,27 @@ while running:
     mouse_x, mouse_y = mouse.get_pos()
 
     #Se eu pressionar a tecla D ou A, então o sol:
-    #if estado == 0 or estado %2 == 0:
-        #if keys[K_d]:
-            #pos_sol = pos_sol + 100 * dt
-        #elif keys[K_a]:
-            #pos_sol = pos_sol - 100 * dt
-    #elif estado == 1:
-        #mouse_x, mouse_y = mouse.get_pos()
-        #pos_sol1 = mouse_x
-        #pos_sol2 = mouse_y
+    if estado == 0 or estado %2 == 0:
+        if keys[K_d]:
+            pos_sol = pos_sol + 100 * dt
+        elif keys[K_a]:
+            pos_sol = pos_sol - 100 * dt
+    elif estado == 1:
+        mouse_x, mouse_y = mouse.get_pos()
+        pos_sol1 = mouse_x
+        pos_sol2 = mouse_y
 
-    #if pos_sol > 1130:
-        #pos_sol = 0
-        #cor_fundo = 151, 209, 250
+    if pos_sol > 1130:
+        pos_sol = 0
+        cor_fundo = 151, 209, 250
+    if pos_sol > 300:
+        cor_fundo = 237, 193, 100
+    if pos_sol > 500:
+        cor_fundo = 217, 164, 52
+    if pos_sol > 800:
+        cor_fundo = 219, 154, 15
 
 
-    
     #Nuvem anda automático
     if a == 0:
         pos_x = pos_x + 100 * dt
@@ -111,4 +118,3 @@ while running:
     window.blit(gato_text, (800, 600))
 
     display.update()
-
